@@ -6,7 +6,10 @@ import modelo.Tablero;
 
 public class Iniciador implements Iniciable {
 	private byte minas;
-	private Densidad densidad;
+	private int densidad;
+	private int filas;
+	private int columnas;
+	private Tablero tablero;
 
 	public byte getMinas() {
 		return minas;
@@ -17,30 +20,47 @@ public class Iniciador implements Iniciable {
 		this.minas = minas;
 	}
 
-	public Densidad getDensidad() {
+	public int getDensidad() {
 		return densidad;
 	}
 
-	public void setDensidad(Densidad densidad) {
-		assert densidad!=null;
+	public void setDensidad(int densidad) {
 		this.densidad = densidad;
 	}
 
-	private byte filas, columnas;
-	private Tablero tablero;
-
 	@Override
 	public void establecerDimensionTablero() {
-		// TODO hay que poner un numero de filas y columnas en base
-		//al numero de minas y a la densidad
-		int valorDensidad=this.densidad.getValor();
-		
+		this.filas=(this.densidad*this.minas)/2;
 	}
 
 	@Override
 	public void crearTablero() {
 		assert this.filas > 0 && this.columnas > 0 : "numero no valido de filas/columnas";
-		// TODO crear el objeto tablero
+		this.tablero=new Tablero(filas, columnas);
+	}
+
+	public Tablero getTablero() {
+		return tablero;
+	}
+
+	public void setTablero(Tablero tablero) {
+		this.tablero = tablero;
+	}
+
+	public int getFilas() {
+		return filas;
+	}
+
+	public void setFilas(int filas) {
+		this.filas = filas;
+	}
+
+	public int getColumnas() {
+		return columnas;
+	}
+
+	public void setColumnas(int columnas) {
+		this.columnas = columnas;
 	}
 
 	@Override
@@ -53,7 +73,7 @@ public class Iniciador implements Iniciable {
 		boolean retorno = this.tablero.colocarMina(x, y);
 	}
 
-	public void iniciarJuego(Byte minas, Densidad densidad) {
+	public void iniciarJuego(Byte minas, int densidad) {
 		setMinas(minas);
 		setDensidad(densidad);
 		establecerDimensionTablero();
